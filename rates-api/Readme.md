@@ -8,14 +8,14 @@ Please spend no more than 4 hours on this.  The intent isn't to build a producti
 
 ### Requirements
 1. Since interest rates changes daily, you first need to source the current rates.  [Pensford](https://www.pensford.com/resources/forward-curve) offers calculated rates on a daily basis on their website and in a corresponding attachment.  You shall write a small ETL script in python that extracts the 1-Month LIBOR and 1-Month SOFR forward rates from this website and stores them in a data store of your choosing (e.g. SQLlite, etc).
-2. Next you are to create a RESTful endpoint (e.g. with [FastAPI](https://fastapi.tiangolo.com/)) that when you POST a payload with loan details, it calculates what the forward applicable interest rate will be for the provided loan taking into consideration the details of the loan.  The loan payload will look as follows:
+2. Next you are to create a RESTful endpoint (e.g. with [FastAPI](https://fastapi.tiangolo.com/)) that when you POST a payload with loan details, it calculates what the forward applicable interest rate will be for the provided loan taking into consideration the details of the loan and the latest rates that you stored from Pensford.  The loan payload will look as follows:
 `{
 "maturity_date": "2022-02-01",
 "reference_rate": "SOFR",
 "rate_floor": 0.02,
 "rate_ceiling": 0.10,
 "rate_spread": 0.02
-}`.  The returned rate curve should not extend beyond the maturity date of the loan and can make reference to either of the LIBOR or SOFR rate curves.
+}`.  The returned rate curve should not extend beyond the maturity date of the loan and can make reference to either of the LIBOR or SOFR rate curves.  The returned payload should be a list of objects that includes the date and rate values, such as `[{"date": "2022-01-01", "rate":0.03}, {"date":"2022-02-01", "rate":0.0325}, ...]`
 
 ### Deliverables
 1. There are two components to the solution and therefore the solution should be delivered in two parts.  The first part is the rates ETL job, which should be runnable on its own and write the appropriate data to the data store.  The second part should be a standalone service that exposes a REST endpoint to perform the calculation.  Bonus: Dockersize the API service such that it could be deployed into a cloud environment.
