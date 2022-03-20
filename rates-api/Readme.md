@@ -1,7 +1,7 @@
 ### Background
 In this project you are going to create a Python service that calculates the projected interest rate of a floating rate loan and delivers the result via a REST API.
 
-A floating rate loan is a loan whose interest rate changes each month based on the prevailing market rates and future expectations of those rates.  The final interest rate that is used to calculate the interest due in a particular month is equal to the reference rate's projected value + a fixed spread.  For example, if the forward rates for the next 3 months are 1.5%, 1.75%, and 2.00% respectively, and the spread on the loan is 2.00%, then the final interest rate that is used to calculate the interest due is 3.50%, 3.75%, and 4.00% for each of the next 3 months.  Additionally, many loans have a minimum and maximum value that the rate can be in any month.  This is to ensure that if the reference rate gets too small or too large that the final rate doesn't go outside a pre-agreed range.
+A floating rate loan is a loan where the interest rate changes each month based on the prevailing market rates and future expectations of those rates.  The final interest rate that is used to calculate the interest due in a particular month is equal to the reference rate's projected value + a fixed spread.  For example, if the forward rates for the next 3 months are 1.5%, 1.75%, and 2.00% respectively, and the spread on the loan is 2.00%, then the final interest rate that is used to calculate the interest due is 3.50%, 3.75%, and 4.00% for each of the next 3 months.  Additionally, many loans have a minimum and maximum value that the rate can be in any month.  This is to ensure that if the reference rate gets too small or too large that the final rate doesn't go outside a pre-agreed range.
 
 Please spend no more than 4 hours on this.  The intent isn't to build a production ready application but to showcase your skill with a small toy project.  Anything submitted that isn't part of the requirements below will also be considered as part of our assessment.
 
@@ -18,7 +18,7 @@ Please spend no more than 4 hours on this.  The intent isn't to build a producti
 }`.  The returned rate curve should not extend beyond the maturity date of the loan and can make reference to either of the LIBOR or SOFR rate curves.
 
 ### Deliverables
-1. There are two components to the solution and therefore the solution should be delivered in two parts.  The first part is the rates ETL job, which should be runnable on its own and write the appropriate data to the data store.  The second part should be a standalone service that exposes a REST endpoint to perform the calculation.
+1. There are two components to the solution and therefore the solution should be delivered in two parts.  The first part is the rates ETL job, which should be runnable on its own and write the appropriate data to the data store.  The second part should be a standalone service that exposes a REST endpoint to perform the calculation.  Bonus: Dockersize the API service such that it could be deployed into a cloud environment.
 2. Push the full solution into a GitHub repository of your choosing.  Make sure the repository visibility is set to public.
 3. Give a small write-up in a root-level Readme file that describes how to run the solution. Include how much time you spent.  Additionally, include a list of areas for improvement or further consideration if you were going to take this project and make it production ready.
 4. Be prepared to discuss your solution if asked.
