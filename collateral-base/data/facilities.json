@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Bank A",
+    "draw_fee": 0.0025,
+    "undrawn_fee": 0.0050,
+    "rate": 0.035,
+    "capacity": 25000000,
+    "ltv": 0.90,
+    "advance_rate": {
+      "A": 0.96,
+      "B": 0.75,
+      "C": 0.55
+    },
+    "concentration": {
+      "A": 0.50,
+      "B": 0.25,
+      "C": 0.10
+    }
+  },
+  {
+    "name": "Bank B",
+    "draw_fee": 0.0100,
+    "undrawn_fee": 0.0075,
+    "rate": 0.030,
+    "ltv": 0.87,
+    "advance_rate": {
+      "A": 0.98,
+      "B": 0.70,
+      "C": 0.50
+    },
+    "capacity": 15000000,
+    "concentration": {
+      "A": 0.73,
+      "B": 0.67,
+      "C": 0.15
+    }
+  },
+  {
+    "name": "Bank C",
+    "draw_fee": 0.0075,
+    "undrawn_fee": 0.0,
+    "rate": 0.05,
+    "ltv": 0.87,
+    "advance_rate": {
+      "A": 0.98,
+      "B": 0.65,
+      "C": 0.35
+    },
+    "capacity": 50000000,
+    "concentration": {
+      "A": 1.00,
+      "B": 0.75,
+      "C": 0.40
+    }
+  }
+]
