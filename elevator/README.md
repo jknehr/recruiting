@@ -50,5 +50,6 @@ This function should output:
 
 ## Deliverables
 1. Deliver your solution as a python project committed into a publicly accessibly Github repository.
-2. You will be presenting your solution in front of the team in the office.  Be prepared with any additional resources you might want available to you for that presentation.
+2. Write a README file that explains how to run your solution.  Also include a short discussion about your assumptions and what simplfications or trade-offs you to thought through during your time with this project.
+3. You will be presenting your solution in front of the team in the office.  Be prepared with any additional resources you might want available to you for that presentation.
 
