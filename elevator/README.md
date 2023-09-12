@@ -24,7 +24,7 @@ For this project, we are going to abstract out time separate from real time so w
 
 ## Requirements
 
-Model out an elevator system in python that supports a configurable amount of elevators (e.g 1 - 10) and building floors (_n_) that with a scheduling algorithm of your choice, taking into consideration the objectives mentioned above.  For this exercise, you can assume we will be building a **Type 2** system, where the originating floor and target floor information will be available to the system upon passenger request. Additionally, we will assume that it takes any elevator 1 time unit to move by 1 floor in either the up or down direction.
+Model out an elevator system in python that supports a configurable amount of elevators (e.g 1 - 10) and building floors (_n_) that with a scheduling algorithm of your choice, taking into consideration the objectives mentioned above.  Please also make each elevator configurable for the maximum amount of passengers it can hold at one time. For this exercise, you can assume we will be building a **Type 2** system, where the originating floor and target floor information will be available to the system upon passenger request. Additionally, we will assume that it takes any elevator 1 time unit to move by 1 floor in either the up or down direction.
 
 Write a function for your model that takes as input a list of requests with the following data points for each request:
 1. Request Time (an integer from 0 to infinity)
