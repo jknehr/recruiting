@@ -24,7 +24,7 @@ For this project, we are going to abstract out time separate from real time so w
 
 ## Requirements
 
-Model out an elevator system in python that supports a configurable amount of elevators (e.g 1 - 10) and building floors (_n_) that with a scheduling algorithm of your choice, taking into consideration the objectives mentioned above.  Please also make each elevator configurable for the maximum amount of passengers it can hold at one time. For this exercise, you can assume we will be building a **Type 2** system, where the originating floor and target floor information will be available to the system upon passenger request. Additionally, we will assume that it takes any elevator 1 time unit to move by 1 floor in either the up or down direction.
+Model out an elevator system in python that supports a configurable amount of elevators (e.g 1 - 10) and building floors (_n_) with a scheduling algorithm of your choice, taking into consideration the objectives mentioned above.  Please also make each elevator configurable for a maximum amount of passengers it can hold at one time. For this exercise, you can assume we will be building a **Type 2** system, where the originating floor and target floor information will be available to the system upon passenger request. Additionally, we will assume that it takes any elevator 1 time unit to move by 1 floor in either the up or down direction.
 
 Write a function for your model that takes as input a list of requests with the following data points for each request:
 1. Request Time (an integer from 0 to infinity)
@@ -45,11 +45,11 @@ The function should exit once all input requests have been processed by the syst
 
 This function should output:
 1. What floor each elevator is at for every point in time to a file.  Even if the input does not have continuous time (like in the example above it skips from time 0 to time 10), you should tick time forward by 1 unit in continuous fashion, logging the locations of each elevator in the system at all times.
-2. Before existing, the function should also write out summary statistics for what the min, max, and mean `total time` and `wait times` were for all passengers.  Have a look at the full distribution - what information stands out to you?
+2. Before exiting, the function should also write out summary statistics for what the min, max, and mean `total time` and `wait times` were for all passengers.  Have a look at the full distribution - what information stands out to you?
 
 
 ## Deliverables
 1. Deliver your solution as a python project committed into a publicly accessibly Github repository.
-2. Write a README file that explains how to run your solution.  Also include a short discussion about your assumptions and what simplfications or trade-offs you to thought through during your time with this project.
+2. Write a README file that explains how to run your solution.  Also include a short discussion about your assumptions and what simplfications or trade-offs you thought through during your time with this project.
 3. You will be presenting your solution in front of the team in the office.  Be prepared with any additional resources you might want available to you for that presentation.
 
