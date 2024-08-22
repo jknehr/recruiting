@@ -1,4 +1,3 @@
-**This project is tough, so please don't spend more than 6 hours on it.  Whatever you have by that time is more than enough even if it isn't a complete solution.  If you choose to spend more time on it because you find the project fun or interesting, please do so, but it is not what we are looking for.**
 
 ### Background
 
