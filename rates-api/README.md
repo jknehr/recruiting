@@ -7,8 +7,8 @@ Please spend no more than 4 hours on this.  The intent isn't to build a producti
 
 
 ### Requirements
-1. Since interest rates changes daily, you first need to source the current rates.  [Pensford](https://www.pensford.com/resources/forward-curve) offers calculated rates on a daily basis on their website and in a corresponding attachment.  You shall write a small ETL script in python that extracts the 1-Month LIBOR and 1-Month SOFR forward rates from this website and stores them in a data store of your choosing (e.g. SQLlite, etc).  You may use any libraries you want, but you may find [BeautifulSoup](https://beautiful-soup-4.readthedocs.io/en/latest/) to be particularly useful here.
-2. Next you are to create a RESTful endpoint (e.g. with [FastAPI](https://fastapi.tiangolo.com/)) that when you POST a payload with loan details, it calculates what the forward applicable interest rate will be for the provided loan taking into consideration the details of the loan and the latest rates that you stored from Pensford.  The loan payload will look as follows:
+1. Since interest rates changes daily, you first need to source the current rates.  [Pensford](https://www.pensford.com/resources/forward-curve) offers calculated rates on a daily basis on their website and in a corresponding attachment.  So does [Chatham Financial](https://www.chathamfinancial.com/technology/us-forward-curves). You shall write a small ETL script in python that extracts the 1-Month SOFR forward rates from one of these websites (you choose) and stores them in a data store of your choosing (e.g. SQLlite, etc).  You may use any libraries you want.
+2. Next you are to create a RESTful endpoint (e.g. with [FastAPI](https://fastapi.tiangolo.com/)) that when you POST a payload with loan details, it calculates what the forward applicable interest rate will be for the provided loan taking into consideration the details of the loan and the latest rates that you stored from Pensford or Chatham.  The loan payload will look as follows:
 `{
 "maturity_date": "2022-02-01",
 "reference_rate": "SOFR",
@@ -21,4 +21,4 @@ Please spend no more than 4 hours on this.  The intent isn't to build a producti
 1. There are two components to the solution and therefore the solution should be delivered in two parts.  The first part is the rates ETL job, which should be runnable on its own and write the appropriate data to the data store.  The second part should be a standalone service that exposes a REST endpoint to perform the calculation.  Bonus: Dockersize the API service such that it could be deployed into a cloud environment.
 2. Push the full solution into a GitHub repository of your choosing.  Make sure the repository visibility is set to public.
 3. Give a small write-up in a root-level Readme file that describes how to run the solution. Include how much time you spent.  Additionally, include a list of areas for improvement or further consideration if you were going to take this project and make it production ready.
-4. Be prepared to discuss your solution if asked.
+4. Be prepared to discuss your solution and present it to the team.
