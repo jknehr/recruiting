@@ -1,24 +1,113 @@
-### Background
-In this project you are going to create a Python service that calculates the projected interest rate of a floating rate loan and delivers the result via a REST API.
+# Floating Rate Loan Interest API – Take-Home Project
 
-A floating rate loan is a loan where the interest rate changes each month based on the prevailing market rates and future expectations of those rates.  The final interest rate that is used to calculate the interest due in a particular month is equal to the reference rate's projected value + a fixed spread.  For example, if the forward rates for the next 3 months are 1.5%, 1.75%, and 2.00% respectively, and the spread on the loan is 2.00%, then the final interest rate that is used to calculate the interest due is 3.50%, 3.75%, and 4.00% for each of the next 3 months.  Additionally, many loans have a minimum and maximum value that the rate can be in any month after the spread has been applied to the reference rate.  This is to ensure that if the reference rate gets too small or too large that the final rate doesn't go outside a pre-agreed range. These mins and maxes are called rate floors and ceilings, respectively.
+## Overview
 
-Please spend no more than 4 hours on this.  The intent isn't to build a production ready application but to showcase your skill with a small toy project.  Anything submitted that isn't part of the requirements below will also be considered as part of our assessment.
+In this project, you’ll build a small Python service that calculates the projected interest rate for a floating rate loan and exposes the result via a REST API.
 
+A floating rate loan is one where the interest rate adjusts periodically, typically monthly, based on market expectations of a reference rate (e.g., SOFR or LIBOR). The final interest rate for each period is calculated as:
 
-### Requirements
-1. Since interest rates changes daily, you first need to source the current rates.  [Pensford](https://www.pensford.com/resources/forward-curve) offers calculated rates on a daily basis on their website and in a corresponding attachment.  So does [Chatham Financial](https://www.chathamfinancial.com/technology/us-forward-curves). You shall write a small ETL script in python that extracts the 1-Month SOFR forward rates from one of these websites (you choose) and stores them in a data store of your choosing (e.g. SQLlite, etc).  You may use any libraries you want.
-2. Next you are to create a RESTful endpoint (e.g. with [FastAPI](https://fastapi.tiangolo.com/)) that when you POST a payload with loan details, it calculates what the forward applicable interest rate will be for the provided loan taking into consideration the details of the loan and the latest rates that you stored from Pensford or Chatham.  The loan payload will look as follows:
-`{
-"maturity_date": "2022-02-01",
-"reference_rate": "SOFR",
-"rate_floor": 0.02,
-"rate_ceiling": 0.10,
-"rate_spread": 0.02
-}`.  The returned rate curve should not extend beyond the maturity date of the loan and can make reference to either of the LIBOR or SOFR rate curves.  The returned payload should be a list of objects that includes the date and rate values, such as `[{"date": "2022-01-01", "rate":0.03}, {"date":"2022-02-01", "rate":0.0325}, ...]`
+```
+final_rate = reference_rate + spread
+```
 
-### Deliverables
-1. There are two components to the solution and therefore the solution should be delivered in two parts.  The first part is the rates ETL job, which should be runnable on its own and write the appropriate data to the data store.  The second part should be a standalone service that exposes a REST endpoint to perform the calculation.  Bonus: Dockersize the API service such that it could be deployed into a cloud environment.
-2. Push the full solution into a GitHub repository of your choosing.  Make sure the repository visibility is set to public.
-3. Give a small write-up in a root-level Readme file that describes how to run the solution. Include how much time you spent.  Additionally, include a list of areas for improvement or further consideration if you were going to take this project and make it production ready.
-4. Be prepared to discuss your solution and present it to the team.
+However, many loans include contractual rate **floors** (minimum) and **ceilings** (maximum), which limit the final rate after the spread is applied.
+
+For example, if the next three months of 1-month SOFR forward rates are:
+- 1.50%, 1.75%, and 2.00%
+
+And the loan spread is 2.00%, the raw calculated rates are:
+- 3.50%, 3.75%, and 4.00%
+
+If the floor is 3.00% and the ceiling is 3.60%, the final applicable rates would be:
+- 3.50%, 3.60%, and 3.60%
+
+This project is not expected to be production-grade, but should reflect your skills and approach to solving technical problems.
+
+---
+
+## Timebox
+
+Please spend no more than **4 hours** on this project.
+
+---
+
+## Requirements
+
+Your solution should be delivered in two parts:
+
+### Part 1: Rate Data Retrieval
+
+- Write a Python script that downloads and extracts **1-month forward rates** for **SOFR** from a public source such as **[Pensford](https://www.pensford.com/resources/forward-curve)** or **[Chatham Financial](https://www.chathamfinancial.com/technology/us-forward-curves)**.
+- Use a structured source format (e.g. downloadable CSV or Excel files).
+- Store the parsed rates in a persistent store of your choice (e.g. SQLite, PostgreSQL, etc.).
+- In your README, document:
+  - Which data source you chose and why.
+  - Any data transformation decisions made.
+
+### Part 2: REST API
+
+- Create a RESTful service using a framework like **[FastAPI](https://fastapi.tiangolo.com/)**.
+- The service should expose a `POST` endpoint at `/loan-rate-curve`.
+- This endpoint should accept a JSON payload with loan details:
+
+```json
+{
+  "maturity_date": "2025-12-01",
+  "reference_rate": "SOFR",
+  "rate_floor": 0.02,
+  "rate_ceiling": 0.10,
+  "rate_spread": 0.02
+}
+```
+
+- The response should be a list of projected rates, one per month up to (but not exceeding) the maturity date. For example:
+
+```json
+[
+  {"date": "2024-07-01", "rate": 0.035},
+  {"date": "2024-08-01", "rate": 0.0375},
+  ...
+]
+```
+
+- Use the latest available forward rates stored from your ETL script.
+- Apply rate floors and ceilings after adding the spread to the base rate.
+
+---
+
+## Bonus
+
+- Dockerize the API so it can be run in a local containerized environment.
+- Implement simple retry logic or backoff in your data download script.
+
+---
+
+## Deliverables
+
+- A public GitHub repository containing:
+  - Your ETL script
+  - Your API implementation
+  - A README file (this one is a good starting point)
+  - A function in your codebase named `explain_design_decisions()` that returns a string summarizing your approach and assumptions
+- Please also include:
+  - A short write-up in your README (~200 words) explaining how you approached the rate logic, what assumptions you made, and any trade-offs you considered.
+  - Instructions to run the solution locally
+  - Approximate time spent
+  - Notes on what you would improve if given more time
+
+---
+
+## Evaluation
+
+We’re interested in:
+
+- Clear, maintainable code
+- Sensible design choices
+- Effective use of Python and RESTful practices
+- Realistic modeling of rate logic and constraints
+
+Be prepared to walk us through your code in a short follow-up discussion.
+
+---
+
+Thanks for taking the time to complete this exercise — we look forward to reviewing your solution!
