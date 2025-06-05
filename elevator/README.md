@@ -1,55 +1,117 @@
+
+# Elevator System Simulation – Take-Home Project
+
 ## Background
-In this project you are going to create a model elevator system.  Modern elevators are much more complex today than when they were first invented. Today, many buildings do not have a single elevator that everyone on every floor has to wait to use; instead there are multiple elevators in multiple elevator banks, sky lobbies, express elevators, and other features of these systems aimed at a more optimal solution to moving people between floors.
 
-### Objectives
-How are these systems designed?  Let's explore some possible objectives of an elevator system:
-1. It must eventually pick up a person calling it (they cannot wait forever).
-2. It must eventually drop a person off who's inside the elevator to their target floor (they also cannot be stuck waiting forever).
-3. It should aim to generally minimize the average total time it takes for someone to go from one floor to another, taking #1 and #2 into consideration. For example, it might be most time-optimal to service a high traffic route and let people outside of that route wait longer, but it could be in conflict with objective #2 of eventually dropping them off to their destination.  `Total time` = `caller wait time` + `elevator travel time to destination floor.`
+Modern elevator systems go far beyond a single elevator serving every floor. They feature elevator banks, sky lobbies, express elevators, and intelligent scheduling to minimize wait and travel times.
 
-### Call Mechanisms
-In addition to having multiple conflicting objectives, elevators typically fall into 2 categories with respect to their call system:
+In this project, you’ll design a simplified simulation of an intelligent elevator system. You’ll implement a discrete-time model of elevators serving requests in a building, simulating how real-time requests are handled efficiently across multiple elevators.
 
-**Type 1**: The first type is perhaps the most well known. Here, a person calls the elevator to their floor and only specifies whether they are going up or down by pushing one of two buttons.  They must then wait blindly until one of the elevators arrives at the floor.  Once they get into the elevator that comes to their floor, they then push another button inside the elevator for their target floor.  In this case, the elevator system has no information other than (a) *originating floor* and (b) *target direction* before they pick up a passenger.
+---
 
-**Type 2**: In the second type, a person, upon entering the elevator area, specifies which floor they want to travel to and the console immediately tells them which elevator number to wait for.  In this case, the elevator knows (a) *originating floor* and (b) *target floor* and the passenger knows which elevator to expect to come for them. Once the elevator comes to pick them up, they cannot change their floor assignment without starting over.
+## Objectives
 
-### Time
-Lastly, time is a critical input for this system for two main reasons:
-1. All information about passengers travel is not known all at once up front.  Elevator systems work in the real world where they get a continuous flow of new requests throughout the day, so the elevator system must be reactive as it learns new information about its tasks.
-2. Time is one of the considerations for the system to attempt to minimize, and thus it's measurement is critical to building a successful system.
+Your system should aim to achieve the following:
 
-For this project, we are going to abstract out time separate from real time so we can control it precisely for our inputs and measurements.
+1. **Serve all requests eventually.** No passenger should wait indefinitely to be picked up or dropped off.
+2. **Minimize total time per passenger**, where:
+   ```
+   total_time = wait_time + travel_time
+   ```
+3. **Honor elevator constraints**, including capacity and direction logic.
 
+---
+
+## System Type
+
+Assume this is a **call system elevator**, where:
+- A passenger submits both their origin and destination floor at the time of request.
+- The system immediately assigns them to a specific elevator.
+- Once assigned, the passenger cannot modify their destination.
+
+---
+
+## Time Modeling
+
+Time will be modeled in **discrete units**:
+- One time unit = one floor of travel (up or down).
+- You do not need to sync to real clock time.
+- Your simulation must tick forward **one time unit at a time**, even if input requests skip ahead.
+
+---
 
 ## Requirements
 
-Model out an elevator system in python that supports a configurable amount of elevators (e.g 1 - 10) and building floors (_n_) with a scheduling algorithm of your choice, taking into consideration the objectives mentioned above.  Please also make each elevator configurable for a maximum amount of passengers it can hold at one time. For this exercise, you can assume we will be building a **Type 2** system, where the originating floor and target floor information will be available to the system upon passenger request. Additionally, we will assume that it takes any elevator 1 time unit to move by 1 floor in either the up or down direction.
+Build a Python model of an elevator system with the following features:
 
-Write a function for your model that takes as input a list of requests with the following data points for each request:
-1. Request Time (an integer from 0 to infinity)
-2. ID (a string identifier for a passenger)
-3. Source Floor (integer between 1 and n, the number of floors)
-4. Target Floor (integer between 1 and n, the number of floors)
+- Configurable number of elevators (e.g., 1–10)
+- Configurable number of floors (`n`)
+- Configurable maximum passengers per elevator
 
-Time can be specified more than once in this list but always increases. The passenger ID is expected to be unique for all entries.  For example, in the following CSV, the list might contain a sequence of passenger requests indicating that at time 0 two people made requests at the same time, and then jump ahead to time 10 for the third request.
+Implement a **scheduler algorithm** of your choice that respects the goals outlined above.
+
+---
+
+### Input
+
+Write a function that accepts a list of elevator requests with the following fields:
+
 ```csv
 time,id,source,dest
 0,passenger1,1,51
 0,passenger2,1,37
-10,passendar3,20,1
+10,passenger3,20,1
 ```
 
-The function should exit once all input requests have been processed by the system AND all passengers have been delivered to their final destination floors.  **You will be penalized if you "look ahead" in the request queue beyond your current time.**
+Each row represents a single request:
+- `time`: Integer time step when request is made
+- `id`: Unique passenger ID
+- `source`: Origin floor
+- `dest`: Destination floor
 
+Your simulation should **not peek ahead** in the request list beyond the current time.
 
-This function should output:
-1. What floor each elevator is at for every point in time to a file.  Even if the input does not have continuous time (like in the example above it skips from time 0 to time 10), you should tick time forward by 1 unit in continuous fashion, logging the locations of each elevator in the system at all times.
-2. Before exiting, the function should also write out summary statistics for what the min, max, and mean `total time` and `wait times` were for all passengers.  Have a look at the full distribution - what information stands out to you?
+---
 
+### Output
+
+1. **Elevator Positions Log**
+   - For every time step (starting from 0), log the location of all elevators to a file.
+   - Format: one row per timestamp, showing elevator positions at that time.
+
+2. **Passenger Summary Statistics**
+   - Upon simulation completion, output:
+     - Minimum, maximum, and average **wait times** and **total times**
+     - Any other notable observations about time distributions or system behavior
+
+---
+
+## Bonus (Optional)
+
+- Implement different elevator algorithms (e.g., round robin, nearest car, zone-based)
+- Simulate "express elevators" that skip certain floors
+- Explore trade-offs between fairness (serving all passengers quickly) and efficiency (optimizing for majority flow)
+
+---
 
 ## Deliverables
-1. Deliver your solution as a python project committed into a publicly accessibly Github repository.
-2. Write a README file that explains how to run your solution.  Also include a short discussion about your assumptions and what simplfications or trade-offs you thought through during your time with this project.
-3. You will be presenting your solution in front of the team in the office.  Be prepared with any additional resources you might want available to you for that presentation.
 
+Please submit:
+
+- A public GitHub repository containing your Python code
+- A `README.md` with:
+  - How to run your code
+  - How long you spent on the project
+  - Any assumptions, simplifications, or trade-offs you made
+  - What you'd improve with more time
+- A function in your code named `explain_design_decisions()` that returns a short string summarizing your architecture, scheduling strategy, and key assumptions
+
+---
+
+## Presentation
+
+Be prepared to present your simulation and discuss your decisions in a follow-up meeting. If you'd like to use any visualizations or statistics in your walkthrough, feel free to include them in your repo or bring them to your presentation.
+
+---
+
+Thanks for taking the time to work on this — we look forward to seeing your simulation in action!
