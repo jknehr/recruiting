@@ -14,17 +14,13 @@ In this project, you’ll design a simplified simulation of an intelligent eleva
 Your system should aim to achieve the following:
 
 1. **Serve all requests eventually.** No passenger should wait indefinitely to be picked up or dropped off.
-2. **Minimize total time per passenger**, where:
-   ```
-   total_time = wait_time + travel_time
-   ```
+2. **Minimize total time per passenger**, where: `total_time = wait_time + travel_time`
 3. **Honor elevator constraints**, including capacity and direction logic.
 
 ---
 
 ## System Type
-
-Assume this is a **call system elevator**, where:
+This system models a modern Destination Dispatch elevator system, where passengers specify both origin and destination in advance, allowing the controller to make optimized routing decisions where:
 - A passenger submits both their origin and destination floor at the time of request.
 - The system immediately assigns them to a specific elevator.
 - Once assigned, the passenger cannot modify their destination.
