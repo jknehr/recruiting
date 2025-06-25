@@ -88,9 +88,8 @@ Your solution should be delivered in two parts:
   - Your ETL script
   - Your API implementation
   - A README file (this one is a good starting point)
-  - A function in your codebase named `explain_design_decisions()` that returns a string summarizing your approach and assumptions
 - Please also include:
-  - A short write-up in your README (~200 words) explaining how you approached the rate logic, what assumptions you made, and any trade-offs you considered.
+  - A short write-up in your README explaining how you approached the rate logic, what assumptions you made, and any trade-offs you considered.
   - Instructions to run the solution locally
   - Approximate time spent
   - Notes on what you would improve if given more time
