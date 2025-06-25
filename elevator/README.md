@@ -100,7 +100,6 @@ Please submit:
   - How long you spent on the project
   - Any assumptions, simplifications, or trade-offs you made
   - What you'd improve with more time
-- A function in your code named `explain_design_decisions()` that returns a short string summarizing your architecture, scheduling strategy, and key assumptions
 
 ---
 
